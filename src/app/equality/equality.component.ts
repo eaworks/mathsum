@@ -24,6 +24,7 @@ export class EqualityComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.mathForm.statusChanges.subscribe((value) => console.log(value));
   }
 
   generateNumber() {
