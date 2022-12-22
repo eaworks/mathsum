@@ -9,6 +9,7 @@ import { EqualityValidators } from '../equality-validators';
   styleUrls: ['./equality.component.scss']
 })
 export class EqualityComponent implements OnInit {
+  seconds = 0;
   // validator u komple forma veriyoruz.
   mathForm = new FormGroup({
     firstNumber: new FormControl(this.generateNumber()),
@@ -25,12 +26,11 @@ export class EqualityComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    const startTime = new Date();
+    let numberSolved = 0;
     this.mathForm.statusChanges.pipe(filter(value => value === 'VALID'), delay(1000)).subscribe((value) => {
-      // if (value === 'INVALID') {
-      //   return;
-      // }
-      // setValue degerlerin hepsinin degistirilmesini ister. biri eksikse hata verir
-      // patchValue belirtilen degerleri update eder.
+      numberSolved++;
+      this.seconds = (new Date().getTime() - startTime.getTime()) / numberSolved / 1000;
       this.mathForm.setValue({
         firstNumber: this.generateNumber(),
         secondNumber: this.generateNumber(),

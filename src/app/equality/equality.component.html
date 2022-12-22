@@ -1,6 +1,7 @@
 <form [formGroup]="mathForm" action="">
     {{firstNumber}} + {{secondNumber}} = <input type="text" formControlName="answer">
 </form>
+{{seconds | number:'1.1-3'}}
 
 <hr />
 <div> Form valid mi {{mathForm.valid}}</div>
