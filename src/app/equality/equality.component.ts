@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { EqualityValidators } from '../equality-validators';
 
 @Component({
   selector: 'app-equality',
@@ -12,14 +13,7 @@ export class EqualityComponent implements OnInit {
     firstNumber: new FormControl(this.generateNumber()),
     secondNumber: new FormControl(this.generateNumber()),
     answer: new FormControl(''),
-  }, [(form: AbstractControl) => {
-    console.log(form.value);
-    const { firstNumber, secondNumber, answer } = form.value;
-    if (firstNumber + secondNumber === parseInt(answer)) {
-      return null;
-    }
-    return { addition: true }
-  }]);
+  }, [EqualityValidators.addition]);
   get firstNumber() {
     return this.mathForm.value.firstNumber;
   }
