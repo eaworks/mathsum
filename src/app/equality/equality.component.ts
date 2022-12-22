@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { delay, filter } from 'rxjs';
+import { delay, filter, scan } from 'rxjs';
 import { EqualityValidators } from '../equality-validators';
 
 @Component({
@@ -26,18 +26,27 @@ export class EqualityComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    const startTime = new Date();
-    let numberSolved = 0;
-    this.mathForm.statusChanges.pipe(filter(value => value === 'VALID'), delay(1000)).subscribe((value) => {
-      numberSolved++;
-      this.seconds = (new Date().getTime() - startTime.getTime()) / numberSolved / 1000;
-      this.mathForm.setValue({
-        firstNumber: this.generateNumber(),
-        secondNumber: this.generateNumber(),
-        answer: ''
-      });
+    // const startTime = new Date();
+    // let numberSolved = 0;
+    this.mathForm.statusChanges.pipe(
+      filter(value => value === 'VALID'),
+      delay(800),
+      scan(acc => {
+        return {
+          numberSolved: acc.numberSolved + 1,
+          startTime: acc.startTime
+        };
+      }, { numberSolved: 0, startTime: new Date() }))
+      .subscribe(({ numberSolved, startTime }) => {
+        // numberSolved++;
+        this.seconds = (new Date().getTime() - startTime.getTime()) / numberSolved / 1000;
+        this.mathForm.setValue({
+          firstNumber: this.generateNumber(),
+          secondNumber: this.generateNumber(),
+          answer: ''
+        });
 
-    });
+      });
   }
 
   generateNumber() {
