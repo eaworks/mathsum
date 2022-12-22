@@ -13,7 +13,7 @@ export class EqualityComponent implements OnInit {
     firstNumber: new FormControl(this.generateNumber()),
     secondNumber: new FormControl(this.generateNumber()),
     answer: new FormControl(''),
-  }, [EqualityValidators.addition]);
+  }, [EqualityValidators.addition('answer', 'firstNumber', 'secondNumber')]);
   get firstNumber() {
     return this.mathForm.value.firstNumber;
   }
