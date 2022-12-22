@@ -1,3 +1,8 @@
 <form [formGroup]="mathForm" action="">
-    {{firstNumber}} + {{secondNumber}} =
+    {{firstNumber}} + {{secondNumber}} = <input type="text" formControlName="answer">
 </form>
+
+<hr />
+<div> Form valid mi {{mathForm.valid}}</div>
+<div> Form degerleri {{mathForm.value | json}}</div>
+<div> Form hatalari {{mathForm.errors | json}}</div>
