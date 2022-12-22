@@ -24,7 +24,19 @@ export class EqualityComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.mathForm.statusChanges.subscribe((value) => console.log(value));
+    this.mathForm.statusChanges.subscribe((value) => {
+      if (value === 'INVALID') {
+        return;
+      }
+      // setValue degerlerin hepsinin degistirilmesini ister. biri eksikse hata verir
+      // patchValue belirtilen degerleri update eder.
+      this.mathForm.setValue({
+        firstNumber: this.generateNumber(),
+        secondNumber: this.generateNumber(),
+        answer: '';
+      });
+
+    });
   }
 
   generateNumber() {
